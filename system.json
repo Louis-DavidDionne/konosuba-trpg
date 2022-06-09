@@ -1,0 +1,28 @@
+{
+  "name": "konosuba-trpg",
+  "title": "Konosuba TRPG",
+  "description": "!PROTOTYPE RELEASE! Many things are missing. Coming up is a bucket-load of polish for the sheets, automation of rolls/stats/calculations/everything else and filled compendia (as well as many many tweaks to more technical things).",
+  "version": "0.0.1",
+  "minimumCoreVersion": "0.8.6",
+  "compatibleCoreVersion": "9",
+  "author": "Louis-David Dionne (Mania)",
+  "esmodules": ["module/konosuba-trpg.mjs"],
+  "styles": ["css/konosuba-trpg.css"],
+  "scripts": [],
+  "packs": [],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ],
+  "gridDistance": 1,
+  "gridUnits": "m",
+  "primaryTokenAttribute": "resources.hitpoints",
+  "secondaryTokenAttribute": null,
+  "url": "",
+  "manifest": "",
+  "download": "",
+  "license": "LICENSE.txt"
+}

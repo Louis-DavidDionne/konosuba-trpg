@@ -1,0 +1,51 @@
+<form class="{{cssClass}}" autocomplete="off">
+  <header class="sheet-header">
+    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" />
+    <div class="header-fields">
+      <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name" /></h1>
+      <div class="flexrow">
+        <span class="flex0">
+          <h3>Level: </h3>
+        </span>
+        <input class="flex0" type="text" name="data.level" value="{{data.level}}" data-dtype="Number" />
+      </div>
+    </div>
+  </header>
+
+  <body>
+    <div class="grid grid-2col">
+      <div>
+        <label class="resource-label">Timing</label>
+        <input type="text" name="data.timing" value="{{data.timing}}" data-dtype="String" />
+
+        <label class="resource-label">Check</label>
+        <input type="text" name="data.check" value="{{data.check}}" data-dtype="String" />
+
+        <label class="resource-label">Range</label>
+        <input type="text" name="data.range" value="{{data.range}}" data-dtype="String" />
+
+        <label class="resource-label">Max SL</label>
+        <input type="text" name="data.maxSL" value="{{data.maxSL}}" data-dtype="String" />
+      </div>
+
+      <div>
+        <label class="resource-label">Element</label>
+        <input type="text" name="data.element" value="{{data.element}}" data-dtype="String" />
+
+        <label class="resource-label">Target</label>
+        <input type="text" name="data.target" value="{{data.target}}" data-dtype="String" />
+
+        <label class="resource-label">Cost</label>
+        <input type="text" name="data.cost" value="{{data.cost}}" data-dtype="Number" />
+      </div>
+    </div>
+    <label class="resource-label">Requirement</label>
+    <input type="text" name="data.requirement" value="{{data.requirement}}" data-dtype="String" />
+
+    <label class="resource-label">Effect</label>
+    <textarea name="data.effect" data-dtype="String">{{data.effect}}</textarea>
+
+    <label class="resource-label">Description</label>
+    <textarea name="data.description" data-dtype="String">{{data.description}}</textarea>
+  </body>
+</form>

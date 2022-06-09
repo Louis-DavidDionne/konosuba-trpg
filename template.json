@@ -1,0 +1,301 @@
+{
+  "Actor": {
+    "types": [
+      "character",
+      "npc"
+    ],
+    "character": {
+      "abilities": {
+        "strength": {
+          "base": 0,
+          "abilityBonus": "",
+          "classBonus": "",
+          "otherBonus": "",
+          "abilityScoreBonus": "",
+          "dice": 2
+        },
+        "dexterity": {
+          "base": 0,
+          "abilityBonus": "",
+          "classBonus": "",
+          "otherBonus": "",
+          "abilityScoreBonus": "",
+          "dice": 2
+        },
+        "agility": {
+          "base": 0,
+          "abilityBonus": "",
+          "classBonus": "",
+          "otherBonus": "",
+          "abilityScoreBonus": "",
+          "dice": 2
+        },
+        "intelligence": {
+          "base": 0,
+          "abilityBonus": "",
+          "classBonus": "",
+          "otherBonus": "",
+          "abilityScoreBonus": "",
+          "dice": 2
+        },
+        "perception": {
+          "base": 0,
+          "abilityBonus": "",
+          "classBonus": "",
+          "otherBonus": "",
+          "abilityScoreBonus": "",
+          "dice": 2
+        },
+        "mind": {
+          "base": 0,
+          "abilityBonus": "",
+          "classBonus": "",
+          "otherBonus": "",
+          "abilityScoreBonus": "",
+          "dice": 2
+        },
+        "luck": {
+          "base": 0,
+          "abilityBonus": "",
+          "classBonus": "",
+          "otherBonus": "",
+          "abilityScoreBonus": "",
+          "dice": 2
+        }
+      },
+      "resources": {
+        "hitpoints": {
+          "value": 0,
+          "min": 0,
+          "max": 0
+        },
+        "manapoints": {
+          "value": 0,
+          "min": 0,
+          "max": 0
+        },
+        "blessings": {
+          "value": 0,
+          "maxUses": 0
+        }
+      },
+      "stats": {
+        "combat": {
+          "hitCheck": {
+            "hitModifier": "",
+            "skillModifier": "",
+            "otherModifier": "",
+            "total": 0,
+            "dice": 2
+          },
+          "attackPower": {
+            "attackPower": "",
+            "skillModifier": "",
+            "otherModifier": "",
+            "total": 0,
+            "dice": 2
+          },
+          "dodgeCheck": {
+            "dodgeModifier": "",
+            "skillModifier": "",
+            "otherModifier": "",
+            "total": 0,
+            "dice": 2
+          },
+          "physicalDefense": {
+            "armorModifier": "",
+            "skillModifier": "",
+            "otherModifier": "",
+            "total": 0
+          },
+          "magicalDefense": {
+            "armorModifier": "",
+            "skillModifier": "",
+            "otherModifier": "",
+            "total": 0
+          },
+          "actionPoints": {
+            "actionModifier": "",
+            "skillModifier": "",
+            "otherModifier": ""
+          },
+          "movement": {
+            "movementModifier": "",
+            "skillModifier": "",
+            "otherModifier": ""
+          }
+        },
+        "special": {
+          "detectTraps": {
+            "skillModifier": "",
+            "otherModifier": "",
+            "dice": 2
+          },
+          "disarmTraps": {
+            "skillModifier": "",
+            "otherModifier": "",
+            "dice": 2
+          },
+          "senseThreats": {
+            "skillModifier": "",
+            "otherModifier": "",
+            "dice": 2
+          },
+          "identifyEnemy": {
+            "skillModifier": "",
+            "otherModifier": "",
+            "dice": 2
+          },
+          "magicCheck": {
+            "skillModifier": "",
+            "otherModifier": "",
+            "dice": 2
+          }
+        }
+      },
+      "build": {
+        "class": {
+          "current": "",
+          "progression": []
+        },
+        "race": ""
+      },
+      "details": {
+        "age": "",
+        "pronouns": "",
+        "height": "",
+        "hairColor": "",
+        "eyeColor": "",
+        "skinColor": ""
+      }
+    },
+    "npc": {
+      "abilities": {
+        "strength": {
+          "base": 0,
+          "dice": 2
+        },
+        "dexterity": {
+          "base": 0,
+          "dice": 2
+        },
+        "agility": {
+          "base": 0,
+          "dice": 2
+        },
+        "intelligence": {
+          "base": 0,
+          "dice": 2
+        },
+        "perception": {
+          "base": 0,
+          "dice": 2
+        },
+        "mind": {
+          "base": 0,
+          "dice": 2
+        },
+        "luck": {
+          "base": 0,
+          "dice": 2
+        }
+      },
+      "type": "-",
+      "element": "-",
+      "level": 1,
+      "IDScore": 0,
+      "attack": "-",
+      "dodge": "-",
+      "hitpoints": {
+        "current": 0,
+        "max": 0
+      },
+      "action": 0,
+      "defense": "0/0",
+      "manapoints": {
+        "current": 0,
+        "max": 0
+      },
+      "move": 0,
+      "description": "-",
+      "loot": "2-3: loot (0 KE)"
+    }
+  },
+    "Item": {
+    "types": [
+      "item",
+      "weapon",
+      "shield",
+      "armor",
+      "accessory",
+      "skill"
+    ],
+    "item": {
+      "quantity": 1,
+      "level": 1,
+      "weight": 0,
+      "value": 0,
+      "description": "-"
+    },
+    "weapon": {
+      "equipped": false,
+      "type": "-",
+      "level": 1,
+      "weight": 0,
+      "hitModifier": 0,
+      "attackPower": 0,
+      "actionModifier": 0,
+      "range": "-",
+      "slot": "-",
+      "value": 0,
+      "description": "-"
+    },
+    "shield": {
+      "equipped": false,
+      "level": 1,
+      "weight": 0,
+      "physicalDefense": 0,
+      "magicalDefense": 0,
+      "actionModifier": -1,
+      "slot": "-",
+      "value": 0,
+      "class": [],
+      "description": "-"
+    },
+    "armor": {
+      "equipped": false,
+      "level": 1,
+      "weight": 0,
+      "dodgeModifier": 0,
+      "physicalDefense": 0,
+      "magicalDefense": 0,
+      "movementModifier": 0,
+      "slot": "-",
+      "value": 0,
+      "class": [],
+      "description": "-"
+    },
+    "accessory": {
+      "equipped": false,
+      "level": 1,
+      "weight": 1,
+      "value": 0,
+      "description": "-"
+    },
+    "skill": {
+      "level": 1,
+      "timing": "-",
+      "check": "-",
+      "target": "-",
+      "range": "-",
+      "cost": "-",
+      "maxSL": 1,
+      "isSpell": false,
+      "element": "none",
+      "requirement": "-",
+      "effect": "-",
+      "critical": "-",
+      "description": "-"
+    }
+  }
+}

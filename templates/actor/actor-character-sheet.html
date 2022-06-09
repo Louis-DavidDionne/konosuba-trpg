@@ -1,0 +1,584 @@
+<form class="{{cssClass}} {{actor.type}} flexcol" autocomplete="off">
+
+  {{!-- Sheet Header --}}
+  <header class="sheet-header">
+    <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100" />
+    <div class="header-fields">
+      <h1 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name" /></h1>
+      {{!-- The grid classes are defined in scss/global/_grid.scss. To use,
+      use both the "grid" and "grid-Ncol" class where "N" can be any number
+      from 1 to 12 and will create that number of columns. --}}
+
+      {{!-- Header Resources--}}
+      <div class="grid grid-6col">
+        <div class="flex-group-center">
+          <label for="data.resources.hitpoints.value" class="resource-label">HP</label>
+          <div class="resource-content flexrow flex-center flex-between">
+            <input type="text" name="data.resources.hitpoints.value" value="{{data.resources.hitpoints.value}}"
+              data-dtype="Number" />
+            <span> / </span>
+            <input type="text" name="data.resources.hitpoints.max" value="{{data.resources.hitpoints.max}}"
+              data-dtype="Number" />
+          </div>
+        </div>
+
+        <div class="flex-group-center">
+          <label for="data.resources.manapoints.value" class="resource-label">MP</label>
+          <div class="resource-content flexrow flex-center flex-between">
+            <input type="text" name="data.resources.manapoints.value" value="{{data.resources.manapoints.value}}"
+              data-dtype="Number" />
+            <span> / </span>
+            <input type="text" name="data.resources.manapoints.max" value="{{data.resources.manapoints.max}}"
+              data-dtype="Number" />
+          </div>
+        </div>
+
+        <div class="flex-group-center">
+          <label for="data.resources.blessings.value" class="resource-label">Blessings</label>
+          <div class="resource-content flexrow flex-center flex-between">
+            <input type="text" name="data.resources.blessings.value" value="{{data.resources.blessings.value}}"
+              data-dtype="Number" />
+          </div>
+        </div>
+
+        <div class="flex-group-center">
+          <label class="resource-label">Defense</label>
+          <div class="resource-content flexrow flex-center flex-between">
+            <span>
+              {{data.stats.combat.physicalDefense.total}}/{{data.stats.combat.magicalDefense.total}}
+            </span>
+          </div>
+        </div>
+
+        <div class="flex-group-center">
+          <label for="data.stats.combat.actionPoints.total" class="resource-label">Action Points</label>
+          <div class="resource-content flexrow flex-center flex-between">
+            <span>
+              {{data.stats.combat.actionPoints.total}}
+            </span>
+          </div>
+        </div>
+
+        <div class="flex-group-center">
+          <label for="data.stats.combat.movement.total" class="resource-label">Movement</label>
+          <div class="resource-content flexrow flex-center flex-between">
+            <span>
+              {{data.stats.combat.movement.total}}
+            </span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  {{!-- Sheet Tab Navigation --}}
+  <nav class="sheet-tabs tabs" data-group="primary">
+    {{!-- Default tab is specified in actor-sheet.mjs --}}
+    <a class="item" data-tab="attributes"><strong>Attributes</strong></a>
+    <a class="item" data-tab="skills"><strong>Skills</strong></a>
+    <a class="item" data-tab="items"><strong>Equipment</strong></a>
+    <a class="item" data-tab="effects"><strong>Effects</strong></a>
+    <a class="item" data-tab="description"><strong>Details</strong></a>
+  </nav>
+
+  {{!-- Sheet Body --}}
+  <section class="sheet-body">
+
+    {{!-- Owned Attributes Tab --}}
+    <div class="tab attributes" data-group="primary" data-tab="attributes">
+      <div class="flexcol">
+        <table>
+          <tr>
+            <th></th>
+            <th>Base Score</th>
+            <th>Ability Bonus</th>
+            <th>Skill Modifier</th>
+            <th>Class Modifier</th>
+            <th>Misc. Modifier</th>
+            <th>Ability Modifier</th>
+            <th>Dice</th>
+            <th>Check</th>
+          </tr>
+          {{#each data.abilities as |ability key|}}
+          <tr>
+            <td class="ability">
+              <label for="data.abilities.{{key}}.base" class="resource-label rollable flexlarge align-left"
+                data-roll="2d6+@abilities.{{key}}.abilityScore" data-label="{{ability.label}}">{{ability.label}}</label>
+            </td>
+            <td>
+              <input class="align-center" type="text" name="data.abilities.{{key}}.base" value="{{ability.base}}"
+                data-dtype="Number" />
+            </td>
+            <td>
+              <input class="align-center" type="text" name="data.abilities.{{key}}.abilityBonus"
+                value="{{ability.abilityBonus}}" data-dtype="Number" />
+            </td>
+            <td>
+              <input class="align-center" type="text" name="data.abilities.{{key}}.otherBonus"
+                value="{{ability.otherBonus}}" data-dtype="Number" />
+            </td>
+            <td>
+              <input class="align-center" type="text" name="data.abilities.{{key}}.classBonus"
+                value="{{ability.classBonus}}" data-dtype="Number" />
+            </td>
+            <td>
+              <input class="align-center" type="text" name="data.abilities.{{key}}.abilityScoreBonus"
+                value="{{ability.abilityScoreBonus}}" data-dtype="Number" />
+            </td>
+            <td>
+              <span class="ability-mod align-center" data-label="{{ability.label}}">{{numberFormat ability.abilityScore
+                decimals=0 sign=true}}</span>
+            </td>
+            <td>
+              <input class="align-center" type="text" name="data.abilities.{{key}}.dice" value="{{ability.dice}}"
+                data-dtype="Number" />
+            </td>
+            <td style="width: 11%;" class="ability-mod rollable align-center"
+              data-roll="(@abilities.{{key}}.dice)d6+@abilities.{{key}}.abilityScore"
+              data-label="{{ability.label}} check">
+              <span>{{numberFormat ability.dice decimals=0 sign=false}}d6
+                {{numberFormat ability.checkBonus decimals=0 sign=true}}</span>
+            </td>
+          </tr>
+          {{/each}}
+        </table>
+      </div>
+      <div class="grid grid-2col">
+        <div>
+          <span><strong>Combat Stats</strong></span>
+          <table>
+            <tr>
+              <th></th>
+              <th>Base</th>
+              <th>Modifier</th>
+              <th>Skills</th>
+              <th>Other</th>
+              <th>Dice</th>
+              <th style="width: 15%;">Check</th>
+            </tr>
+            <tr>
+              <td class="rollable"
+                data-roll="{{data.stats.combat.hitCheck.dice}}d6+{{data.stats.combat.hitCheck.total}}"
+                data-label="Hit check">
+                <strong>Hit Check</strong>
+              </td>
+              <td>
+                <span class="align-center" data-label="{{data.abilities.dexterity.label}}">{{numberFormat
+                  data.abilities.dexterity.abilityScore decimals=0 sign=false}}</span>
+              </td>
+              <td>
+                <input class="align-center" type="text" name="data.stats.combat.hitCheck.hitModifier"
+                  value="{{data.stats.combat.hitCheck.hitModifier}}" data-dtype="Number" />
+              </td>
+              <td>
+                <input class="align-center" type="text" name="data.stats.combat.hitCheck.skillModifier"
+                  value="{{data.stats.combat.hitCheck.skillModifier}}" data-dtype="Number" />
+              </td>
+              <td>
+                <input class="align-center" type="text" name="data.stats.combat.hitCheck.otherModifier"
+                  value="{{data.stats.combat.hitCheck.otherModifier}}" data-dtype="Number" />
+              </td>
+              <td>
+                <input class="align-center" type="text" name="data.stats.combat.hitCheck.dice"
+                  value="{{data.stats.combat.hitCheck.dice}}" data-dtype="Number" />
+              </td>
+              <td class="rollable align-center"
+                data-roll="{{data.stats.combat.hitCheck.dice}}d6+{{data.stats.combat.hitCheck.total}}"
+                data-label="Hit check">
+                <span>{{numberFormat data.stats.combat.hitCheck.dice decimals=0 sign=false}}d6
+                  {{numberFormat data.stats.combat.hitCheck.total decimals=0 sign=true}}</span>
+              </td>
+            </tr>
+            <tr>
+              <td class="rollable"
+                data-roll="{{data.stats.combat.attackPower.dice}}d6+{{data.stats.combat.attackPower.total}}"
+                data-label="Attack Power">
+                <strong>Attack Power</strong>
+              </td>
+              <td>
+                -{{!-- No Base Attack Power --}}
+              </td>
+              <td>
+                <input class="align-center" type="text" name="data.stats.combat.attackPower.attackPower"
+                  value="{{data.stats.combat.attackPower.attackPower}}" data-dtype="Number" />
+              </td>
+              <td>
+                <input class="align-center" type="text" name="data.stats.combat.attackPower.skillModifier"
+                  value="{{data.stats.combat.attackPower.skillModifier}}" data-dtype="Number" />
+              </td>
+              <td>
+                <input class="align-center" type="text" name="data.stats.combat.attackPower.otherModifier"
+                  value="{{data.stats.combat.attackPower.otherModifier}}" data-dtype="Number" />
+              </td>
+              <td>
+                <input class="align-center" type="text" name="data.stats.combat.attackPower.dice"
+                  value="{{data.stats.combat.attackPower.dice}}" data-dtype="Number" />
+              </td>
+              <td class="rollable align-center"
+                data-roll="{{data.stats.combat.attackPower.dice}}d6+{{data.stats.combat.attackPower.total}}"
+                data-label="Attack Power">
+                <span>{{numberFormat data.stats.combat.attackPower.dice decimals=0 sign=false}}d6
+                  {{numberFormat data.stats.combat.attackPower.total decimals=0 sign=true}}</span>
+              </td>
+            </tr>
+            <tr>
+              <td class="rollable"
+                data-roll="{{data.stats.combat.dodgeCheck.dice}}d6+{{data.stats.combat.dodgeCheck.total}}"
+                data-label="Dodge check">
+                <strong>Dodge Check</strong>
+              </td>
+              <td>
+                <span class="align-center" data-label="{{data.abilities.agility.label}}">{{numberFormat
+                  data.abilities.agility.abilityScore decimals=0 sign=false}}</span>
+              </td>
+              <td>
+                <input class="align-center" type="text" name="data.stats.combat.dodgeCheck.dodgeModifier"
+                  value="{{data.stats.combat.dodgeCheck.dodgeModifier}}" data-dtype="Number" />
+              </td>
+              <td>
+                <input class="align-center" type="text" name="data.stats.combat.dodgeCheck.skillModifier"
+                  value="{{data.stats.combat.dodgeCheck.skillModifier}}" data-dtype="Number" />
+              </td>
+              <td>
+                <input class="align-center" type="text" name="data.stats.combat.dodgeCheck.otherModifier"
+                  value="{{data.stats.combat.dodgeCheck.otherModifier}}" data-dtype="Number" />
+              </td>
+              <td>
+                <input class="align-center" type="text" name="data.stats.combat.dodgeCheck.dice"
+                  value="{{data.stats.combat.dodgeCheck.dice}}" data-dtype="Number" />
+              </td>
+              <td class="rollable align-center"
+                data-roll="{{data.stats.combat.dodgeCheck.dice}}d6+{{data.stats.combat.dodgeCheck.total}}"
+                data-label="Dodge check">
+                <span>{{numberFormat data.stats.combat.dodgeCheck.dice decimals=0 sign=false}}d6
+                  {{numberFormat data.stats.combat.dodgeCheck.total decimals=0 sign=true}}</span>
+              </td>
+            <tr>
+              <td class="rollable" data-roll="{{data.stats.combat.physicalDefense.total}}"
+                data-label="Physical Defense">
+                <strong>Physical Defense</strong>
+              </td>
+              <td>
+                -{{!-- No Base Physical Defense --}}
+              </td>
+              <td>
+                <input class="align-center" type="text" name="data.stats.combat.physicalDefense.armorModifier"
+                  value="{{data.stats.combat.physicalDefense.armorModifier}}" data-dtype="Number" />
+              </td>
+              <td>
+                <input class="align-center" type="text" name="data.stats.combat.physicalDefense.skillModifier"
+                  value="{{data.stats.combat.physicalDefense.skillModifier}}" data-dtype="Number" />
+              </td>
+              <td>
+                <input class="align-center" type="text" name="data.stats.combat.physicalDefense.otherModifier"
+                  value="{{data.stats.combat.physicalDefense.otherModifier}}" data-dtype="Number" />
+              </td>
+              <td>
+                {{!-- No dice for Physical Defense --}}
+              </td>
+              <td class="rollable align-center" data-roll="{{data.stats.combat.physicalDefense.total}}"
+                data-label="Physical Defense">
+                <span>{{numberFormat data.stats.combat.physicalDefense.total decimals=0 sign=false}}</span>
+              </td>
+            </tr>
+            <tr>
+              <td class="rollable" data-roll="{{data.stats.combat.magicalDefense.total}}" data-label="Magical Defense">
+                <strong>Magical Defense</strong>
+              </td>
+              <td>
+                <span class="align-center" data-label="{{data.abilities.mind.label}}">{{numberFormat
+                  data.abilities.mind.abilityScore decimals=0 sign=false}}</span>
+              </td>
+              <td>
+                <input class="align-center" type="text" name="data.stats.combat.magicalDefense.armorModifier"
+                  value="{{data.stats.combat.magicalDefense.armorModifier}}" data-dtype="Number" />
+              </td>
+              <td>
+                <input class="align-center" type="text" name="data.stats.combat.magicalDefense.skillModifier"
+                  value="{{data.stats.combat.magicalDefense.skillModifier}}" data-dtype="Number" />
+              </td>
+              <td>
+                <input class="align-center" type="text" name="data.stats.combat.magicalDefense.otherModifier"
+                  value="{{data.stats.combat.magicalDefense.otherModifier}}" data-dtype="Number" />
+              </td>
+              <td>
+                {{!-- No dice for Magical Defense --}}
+              </td>
+              <td class="rollable align-center" data-roll="{{data.stats.combat.magicalDefense.total}}"
+                data-label="Magical Defense">
+                <span>{{numberFormat data.stats.combat.magicalDefense.total decimals=0 sign=false}}</span>
+              </td>
+            </tr>
+            <tr>
+              <td class="rollable" data-roll="{{data.stats.combat.actionPoints.total}}" data-label="Action Points">
+                <strong>Action Points</strong>
+              </td>
+              <td>
+                <span class="align-center" data-label="{{data.stats.combat.actionPoints.base}}">{{numberFormat
+                  data.stats.combat.actionPoints.base decimals=0 sign=false}}</span>
+              </td>
+              <td>
+                <input class="align-center" type="text" name="data.stats.combat.actionPoints.actionModifier"
+                  value="{{data.stats.combat.actionPoints.actionModifier}}" data-dtype="Number" />
+              </td>
+              <td>
+                <input class="align-center" type="text" name="data.stats.combat.actionPoints.skillModifier"
+                  value="{{data.stats.combat.actionPoints.skillModifier}}" data-dtype="Number" />
+              </td>
+              <td>
+                <input class="align-center" type="text" name="data.stats.combat.actionPoints.otherModifier"
+                  value="{{data.stats.combat.actionPoints.otherModifier}}" data-dtype="Number" />
+              </td>
+              <td>
+                {{!-- No dice for Action Points --}}
+              </td>
+              <td class="rollable align-center" data-roll="{{data.stats.combat.actionPoints.total}}"
+                data-label="Action Points">
+                <span>{{numberFormat data.stats.combat.actionPoints.total decimals=0 sign=false}}</span>
+              </td>
+            </tr>
+            <tr>
+              <td class="rollable" data-roll="{{data.stats.combat.movement.total}}" data-label="Movement">
+                <strong>Movement</strong>
+              </td>
+              <td>
+                <span class="align-center" data-label="{{data.stats.combat.movement.base}}">{{numberFormat
+                  data.stats.combat.movement.base decimals=0 sign=false}}</span>
+              </td>
+              <td>
+                <input class="align-center" type="text" name="data.stats.combat.movement.movementModifier"
+                  value="{{data.stats.combat.movement.movementModifier}}" data-dtype="Number" />
+              </td>
+              <td>
+                <input class="align-center" type="text" name="data.stats.combat.movement.skillModifier"
+                  value="{{data.stats.combat.movement.skillModifier}}" data-dtype="Number" />
+              </td>
+              <td>
+                <input class="align-center" type="text" name="data.stats.combat.movement.otherModifier"
+                  value="{{data.stats.combat.movement.otherModifier}}" data-dtype="Number" />
+              </td>
+              <td>
+                {{!-- No dice for Movement --}}
+              </td>
+              <td class="rollable align-center" data-roll="{{data.stats.combat.movement.total}}" data-label="Movement">
+                <span>{{numberFormat data.stats.combat.movement.total decimals=0 sign=false}}</span>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div>
+          <span><strong>Special Checks</strong></span>
+          <table>
+            <tr>
+              <th></th>
+              <th>Base</th>
+              <th>Skills</th>
+              <th>Other</th>
+              <th>Dice</th>
+              <th style="width: 15%;">Check</th>
+            </tr>
+            <tr>
+              <td class="rollable"
+                data-roll="{{data.stats.special.magicCheck.dice}}d6+{{data.stats.special.magicCheck.total}}"
+                data-label="Magic check">
+                <strong>Magic Check</strong>
+              </td>
+              <td>
+                <span class="align-center" data-label="{{data.stats.special.magicCheck.base}}">{{numberFormat
+                  data.stats.special.magicCheck.base decimals=0 sign=false}}</span>
+              </td>
+              <td>
+                <input class="align-center" type="text" name="data.stats.special.magicCheck.skillModifier"
+                  value="{{data.stats.special.magicCheck.skillModifier}}" data-dtype="Number" />
+              </td>
+              <td>
+                <input class="align-center" type="text" name="data.stats.special.magicCheck.otherModifier"
+                  value="{{data.stats.special.magicCheck.otherModifier}}" data-dtype="Number" />
+              </td>
+              <td>
+                <input class="align-center" type="text" name="data.stats.special.magicCheck.dice"
+                  value="{{data.stats.special.magicCheck.dice}}" data-dtype="Number" />
+              </td>
+              <td class="rollable align-center"
+                data-roll="{{data.stats.special.magicCheck.dice}}d6+{{data.stats.special.magicCheck.total}}"
+                data-label="Magic Check">
+                <span>{{numberFormat data.stats.special.magicCheck.dice decimals=0 sign=false}}d6
+                  {{numberFormat data.stats.special.magicCheck.total decimals=0 sign=true}}</span>
+              </td>
+            </tr>
+            <tr>
+              <td class="rollable"
+                data-roll="{{data.stats.special.detectTraps.dice}}d6+{{data.stats.special.detectTraps.total}}"
+                data-label="Detect Traps">
+                <strong>Detect Traps</strong>
+              </td>
+              <td>
+                <span class="align-center" data-label="{{data.stats.special.detectTraps.base}}">{{numberFormat
+                  data.stats.special.detectTraps.base decimals=0 sign=false}}</span>
+              </td>
+              <td>
+                <input class="align-center" type="text" name="data.stats.special.detectTraps.skillModifier"
+                  value="{{data.stats.special.detectTraps.skillModifier}}" data-dtype="Number" />
+              </td>
+              <td>
+                <input class="align-center" type="text" name="data.stats.special.detectTraps.otherModifier"
+                  value="{{data.stats.special.detectTraps.otherModifier}}" data-dtype="Number" />
+              </td>
+              <td>
+                <input class="align-center" type="text" name="data.stats.special.detectTraps.dice"
+                  value="{{data.stats.special.detectTraps.dice}}" data-dtype="Number" />
+              </td>
+              <td class="rollable align-center"
+                data-roll="{{data.stats.special.detectTraps.dice}}d6+{{data.stats.special.detectTraps.total}}"
+                data-label="Detect Traps">
+                <span>{{numberFormat data.stats.special.detectTraps.dice decimals=0 sign=false}}d6
+                  {{numberFormat data.stats.special.detectTraps.total decimals=0 sign=true}}</span>
+              </td>
+            </tr>
+            <tr>
+              <td class="rollable"
+                data-roll="{{data.stats.special.disarmTraps.dice}}d6+{{data.stats.special.disarmTraps.total}}"
+                data-label="Disarm Traps">
+                <strong>Disarm Traps</strong>
+              </td>
+              <td>
+                <span class="align-center" data-label="{{data.stats.special.disarmTraps.base}}">{{numberFormat
+                  data.stats.special.disarmTraps.base decimals=0 sign=false}}</span>
+              </td>
+              <td>
+                <input class="align-center" type="text" name="data.stats.special.disarmTraps.skillModifier"
+                  value="{{data.stats.special.disarmTraps.skillModifier}}" data-dtype="Number" />
+              </td>
+              <td>
+                <input class="align-center" type="text" name="data.stats.special.disarmTraps.otherModifier"
+                  value="{{data.stats.special.disarmTraps.otherModifier}}" data-dtype="Number" />
+              </td>
+              <td>
+                <input class="align-center" type="text" name="data.stats.special.disarmTraps.dice"
+                  value="{{data.stats.special.disarmTraps.dice}}" data-dtype="Number" />
+              </td>
+              <td class="rollable align-center"
+                data-roll="{{data.stats.special.disarmTraps.dice}}d6+{{data.stats.special.disarmTraps.total}}"
+                data-label="Disarm Traps">
+                <span>{{numberFormat data.stats.special.disarmTraps.dice decimals=0 sign=false}}d6
+                  {{numberFormat data.stats.special.disarmTraps.total decimals=0 sign=true}}</span>
+              </td>
+            </tr>
+            <tr>
+              <td class="rollable"
+                data-roll="{{data.stats.special.senseThreats.dice}}d6+{{data.stats.special.senseThreats.total}}"
+                data-label="Sense Threats">
+                <strong>Sense Threats</strong>
+              </td>
+              <td>
+                <span class="align-center" data-label="{{data.stats.special.senseThreats.base}}">{{numberFormat
+                  data.stats.special.senseThreats.base decimals=0 sign=false}}</span>
+              </td>
+              <td>
+                <input class="align-center" type="text" name="data.stats.special.senseThreats.skillModifier"
+                  value="{{data.stats.special.senseThreats.skillModifier}}" data-dtype="Number" />
+              </td>
+              <td>
+                <input class="align-center" type="text" name="data.stats.special.senseThreats.otherModifier"
+                  value="{{data.stats.special.senseThreats.otherModifier}}" data-dtype="Number" />
+              </td>
+              <td>
+                <input class="align-center" type="text" name="data.stats.special.senseThreats.dice"
+                  value="{{data.stats.special.senseThreats.dice}}" data-dtype="Number" />
+              </td>
+              <td class="rollable align-center"
+                data-roll="{{data.stats.special.senseThreats.dice}}d6+{{data.stats.special.senseThreats.total}}"
+                data-label="Sense Threats">
+                <span>{{numberFormat data.stats.special.senseThreats.dice decimals=0 sign=false}}d6
+                  {{numberFormat data.stats.special.senseThreats.total decimals=0 sign=true}}</span>
+              </td>
+            </tr>
+            <tr>
+              <td class="rollable"
+                data-roll="{{data.stats.special.identifyEnemy.dice}}d6+{{data.stats.special.identifyEnemy.total}}"
+                data-label="Identify Enemy">
+                <strong>Identify Enemy</strong>
+              </td>
+              <td>
+                <span class="align-center" data-label="{{data.stats.special.identifyEnemy.base}}">{{numberFormat
+                  data.stats.special.identifyEnemy.base decimals=0 sign=false}}</span>
+              </td>
+              <td>
+                <input class="align-center" type="text" name="data.stats.special.identifyEnemy.skillModifier"
+                  value="{{data.stats.special.identifyEnemy.skillModifier}}" data-dtype="Number" />
+              </td>
+              <td>
+                <input class="align-center" type="text" name="data.stats.special.identifyEnemy.otherModifier"
+                  value="{{data.stats.special.identifyEnemy.otherModifier}}" data-dtype="Number" />
+              </td>
+              <td>
+                <input class="align-center" type="text" name="data.stats.special.identifyEnemy.dice"
+                  value="{{data.stats.special.identifyEnemy.dice}}" data-dtype="Number" />
+              </td>
+              <td class="rollable align-center"
+                data-roll="{{data.stats.special.identifyEnemy.dice}}d6+{{data.stats.special.identifyEnemy.total}}"
+                data-label="Identify Enemy">
+                <span>{{numberFormat data.stats.special.identifyEnemy.dice decimals=0 sign=false}}d6
+                  {{numberFormat data.stats.special.identifyEnemy.total decimals=0 sign=true}}</span>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    {{!-- Owned Skills Tab --}}
+    <div class="tab items" data-group="primary" data-tab="skills">
+      {{> "systems/konosuba-trpg/templates/actor/parts/actor-skills.html"}}
+    </div>
+
+    {{!-- Owned Items Tab --}}
+    <div class="tab items" data-group="primary" data-tab="items">
+      {{> "systems/konosuba-trpg/templates/actor/parts/actor-items.html"}}
+    </div>
+
+    {{!-- Active Effects Tab --}}
+    <div class="tab effects flexcol" data-group="primary" data-tab="effects">
+      {{> "systems/konosuba-trpg/templates/actor/parts/actor-effects.html"}}
+    </div>
+
+    {{!-- Biography Tab --}}
+    <div class="tab biography" data-group="primary" data-tab="description">
+      <div class="grid grid-2col">
+        <div>
+          <label class="resource-label">Class</label>
+          <input type="text" name="data.build.class.current" value="{{data.build.class.current}}" data-dtype="String" />
+
+          <label class="resource-label">Age</label>
+          <input type="text" name="data.details.age" value="{{data.details.age}}" data-dtype="String" />
+  
+          <label class="resource-label">Pronouns</label>
+          <input type="text" name="data.details.pronouns" value="{{data.details.pronouns}}" data-dtype="String" />
+  
+          <label class="resource-label">Height</label>
+          <input type="text" name="data.details.height" value="{{data.details.height}}" data-dtype="String" />
+        </div>
+  
+        <div>
+          <label class="resource-label">Race</label>
+          <input type="text" name="data.build.race" value="{{data.build.race}}" data-dtype="String" />
+
+          <label class="resource-label">Hair Color</label>
+          <input type="text" name="data.details.hairColor" value="{{data.details.hairColor}}" data-dtype="String" />
+  
+          <label class="resource-label">Eye Color</label>
+          <input type="text" name="data.details.eyeColor" value="{{data.details.eyeColor}}" data-dtype="String" />
+  
+          <label class="resource-label">Skin</label>
+          <input type="text" name="data.details.skinColor" value="{{data.details.skinColor}}" data-dtype="Number" />
+        </div>
+      </div>
+      
+      <label><h3>Bio:</h3></label>
+      {{editor content=data.biography target="data.biography" rollData=rollData button=true owner=owner
+      editable=editable}}
+    </div>
+
+  </section>
+</form>

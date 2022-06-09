@@ -1,0 +1,16 @@
+{
+  "KONOSUBA.strength": "Strength",
+  "KONOSUBA.dexterity": "Dexterity",
+  "KONOSUBA.agility": "Agility",
+  "KONOSUBA.intelligence": "Intelligence",
+  "KONOSUBA.perception": "Perception",
+  "KONOSUBA.mind": "Mind",
+  "KONOSUBA.luck": "Luck",
+
+  "KONOSUBA.EffectCreate": "Create Effect",
+  "KONOSUBA.EffectToggle": "Toggle Effect",
+  "KONOSUBA.EffectEdit": "Edit Effect",
+  "KONOSUBA.EffectDelete": "Delete Effect",
+
+  "KONOSUBA.Add": "Add"
+}

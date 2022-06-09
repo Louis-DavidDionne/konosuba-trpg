@@ -1,0 +1,169 @@
+<form class="{{cssClass}} {{actor.type}} flexcol" autocomplete="off">
+
+  {{!-- Sheet Header --}}
+  <header class="sheet-header">
+    <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100" />
+    <div class="header-fields">
+      <h1 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name" /></h1>
+      <div class="resources grid grid-5col">
+        <div class="resource flex-group-center">
+          <label for="data.hitpoints.current" class="resource-label">HP</label>
+          <div class="resource-content flexrow flex-center flex-between">
+            <input type="text" name="data.hitpoints.current" value="{{data.hitpoints.current}}" data-dtype="Number" />
+            <span> / </span>
+            <input type="text" name="data.hitpoints.max" value="{{data.hitpoints.max}}" data-dtype="Number" />
+          </div>
+        </div>
+
+        <div class="flex-group-center">
+          <label for="data.manapoints.value" class="resource-label">MP</label>
+          <div class="resource-content flexrow flex-center flex-between">
+            <input type="text" name="data.manapoints.current" value="{{data.manapoints.current}}" data-dtype="Number" />
+            <span> / </span>
+            <input type="text" name="data.manapoints.max" value="{{data.manapoints.max}}" data-dtype="Number" />
+          </div>
+        </div>
+
+        <div class="resource flex-group-center">
+          <label for="data.level" class="resource-label">Level</label>
+          <div class="resource-content flexrow flex-center flex-between">
+            <input type="text" name="data.level" value="{{data.level}}" data-dtype="Number" />
+          </div>
+        </div>
+
+        <div class="flex-group-center">
+          <label class="resource-label">Defense</label>
+          <div class="resource-content flexrow flex-center flex-between">
+            <span>
+              <input type="text" name="data.defense" value="{{data.defense}}" data-dtype="String" />
+            </span>
+          </div>
+        </div>
+
+        <div class="resource flex-group-center">
+          <label for="data.element" class="resource-label">Element</label>
+          <div class="resource-content flexrow flex-center flex-between">
+            <input type="text" name="data.element" value="{{data.element}}" data-dtype="String" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  {{!-- Sheet Tab Navigation --}}
+  <nav class="sheet-tabs tabs" data-group="primary">
+    {{!-- Default tab is specified in actor-sheet.mjs --}}
+    <a class="item" data-tab="description">Description</a>
+    <a class="item" data-tab="skills">Skills</a>
+    <a class="item" data-tab="effects">Effects</a>
+  </nav>
+
+  {{!-- Sheet Body --}}
+  <section class="sheet-body">
+
+    {{!-- Biography Tab --}}
+    <div class="tab biography" data-group="primary" data-tab="description">
+      <div>
+        <label class="resource-label">Attack:</label>
+        <input type="text" name="data.attack" value="{{data.attack}}" data-dtype="String" />
+      </div>
+      <div class="grid grid-2col">
+        <div>
+          <label class="resource-label">ID Score:</label>
+          <input type="text" name="data.IDScore" value="{{data.IDScore}}" data-dtype="String" />
+
+          <label class="resource-label">Type:</label>
+          <input type="text" name="data.type" value="{{data.type}}" data-dtype="String" />
+
+          <label class="resource-label">Dodge:</label>
+          <input type="text" name="data.dodge" value="{{data.dodge}}" data-dtype="String" />
+        </div>
+        <div>
+          <label class="resource-label">Action:</label>
+          <input type="text" name="data.action" value="{{data.action}}" data-dtype="Number" />
+
+          <label class="resource-label">Movement:</label>
+          <input type="text" name="data.move" value="{{data.move}}" data-dtype="Number" />
+        </div>
+      </div>
+      <div class="flexcol">
+        <button type="button" class="collapsible">Attributes</button>
+        <div class="hidden">
+          <table>
+            <tr>
+              <th></th>
+              <th>Score</th>
+              <th>Ability Modifier</th>
+              <th>Dice</th>
+              <th>Check</th>
+            </tr>
+            {{#each data.abilities as |ability key|}}
+            <tr>
+              <td class="ability">
+                <label for="data.abilities.{{key}}.base" class="resource-label rollable flexlarge align-left"
+                  data-roll="2d6+@abilities.{{key}}.abilityScore"
+                  data-label="{{ability.label}}">{{ability.label}}</label>
+              </td>
+              <td>
+                <input class="align-center" type="text" name="data.abilities.{{key}}.base" value="{{ability.base}}"
+                  data-dtype="Number" />
+              </td>
+              <td>
+                <span class="ability-mod align-center" data-label="{{ability.label}}">{{numberFormat
+                  ability.abilityScore
+                  decimals=0 sign=true}}</span>
+              </td>
+              <td>
+                <input class="align-center" type="text" name="data.abilities.{{key}}.dice" value="{{ability.dice}}"
+                  data-dtype="Number" />
+              </td>
+              <td style="width: 11%;" class="ability-mod rollable align-center"
+                data-roll="(@abilities.{{key}}.dice)d6+@abilities.{{key}}.abilityScore"
+                data-label="{{ability.label}} check">
+                <span>{{numberFormat ability.dice decimals=0 sign=false}}d6
+                  {{numberFormat ability.checkBonus decimals=0 sign=true}}</span>
+              </td>
+            </tr>
+            {{/each}}
+          </table>
+        </div>
+      </div>
+      <div>
+        <label class="resource-label">Description</label>
+        <textarea name="data.description" data-dtype="String">{{data.description}}</textarea>
+      </div>
+      <div>
+        <label class="resource-label">Loot</label>
+        <textarea name="data.loot" data-dtype="String">{{data.loot}}</textarea>
+      </div>
+    </div>
+
+    {{!-- Owned Skills Tab --}}
+    <div class="tab items" data-group="primary" data-tab="skills">
+      {{> "systems/konosuba-trpg/templates/actor/parts/actor-skills.html"}}
+    </div>
+
+    {{!-- Active Effects Tab --}}
+    <div class="tab effects flexcol" data-group="primary" data-tab="effects">
+      {{> "systems/konosuba-trpg/templates/actor/parts/actor-effects.html"}}
+    </div>
+
+  </section>
+</form>
+
+<script>
+  var coll = document.getElementsByClassName("collapsible");
+  var i;
+
+  for (i = 0; i < coll.length; i++) {
+    coll[i].addEventListener("click", function () {
+      this.classList.toggle("active");
+      var content = this.nextElementSibling;
+      if (content.style.display === "block") {
+        content.style.display = "none";
+      } else {
+        content.style.display = "block";
+      }
+    });
+  }
+</script>
